@@ -2,12 +2,20 @@ plugins {
     id("java-gradle-plugin")
     id("maven-publish")
     id("com.gradle.plugin-publish") version "0.16.0"
-    kotlin("jvm") version("1.5.31")
+    id("org.jetbrains.changelog") version "1.3.1"
     `kotlin-dsl`
 }
 
-group = "info.pzss.zomboid"
-version = "0.1.0"
+fun properties(key: String) = project.findProperty(key)?.toString()
+
+description = properties("description")
+group = properties("projectGroup")!!
+version = properties("version")!!
+
+changelog {
+    version.set(project.version as? String)
+    groups.set(emptyList())
+}
 
 pluginBundle {
     website = "https://github.com/pz-extender/pz-gradle"
@@ -36,7 +44,6 @@ repositories {
 dependencies {
     implementation(gradleApi())
     implementation(localGroovy())
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
     implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.1")
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("org.openrs2:fernflower:1.1.1")

@@ -8,8 +8,10 @@ import org.gradle.plugin.use.PluginDependencySpec
 inline val PluginDependenciesSpec.`project-zomboid`: PluginDependencySpec
     get() = id("info.pzss.zomboid.gradle")
 
-fun Project.pzLocalRepository() = repositories.flatDir {
+@Deprecated("Deprecated since 0.1.1", replaceWith = ReplaceWith("pzLocal()"))
+fun Project.pzLocalRepository() = pzLocal()
+
+fun Project.pzLocal() = repositories.flatDir {
     dirs(project.rootProject.tasks.getByName<Jar>("projectZomboidSourcesJar").destinationDirectory)
 }
-
 fun DependencyHandler.pzGameApi() = mapOf("name" to "project-zomboid", "version" to "latest")
