@@ -46,12 +46,6 @@ open class ProjectZomboidPlugin : Plugin<Project> {
             }
         }
 
-        project.repositories {
-            flatDir {
-                dirs(project.tasks.getByName<Jar>("projectZomboidSourcesJar").destinationDirectory)
-            }
-        }
-
         project.afterEvaluate {
             val launchTasks = tasks.withType(ProjectZomboidLaunchTask::class)
             launchTasks.forEach { it.configureAfterEvaluate(config) }
