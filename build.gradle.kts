@@ -1,6 +1,29 @@
 plugins {
+    id("java-gradle-plugin")
+    id("maven-publish")
+    id("com.gradle.plugin-publish") version "0.16.0"
     kotlin("jvm") version("1.5.31")
     `kotlin-dsl`
+}
+
+group = "info.pzss.zomboid"
+version = "0.1.0"
+
+pluginBundle {
+    website = "https://github.com/pz-extender/pz-gradle"
+    vcsUrl = "https://github.com/pz-extender/pz-gradle"
+    tags = listOf("project-zomboid", "zomboid", "modding", "mod")
+}
+
+gradlePlugin {
+    plugins {
+        create("zomboidPlugin") {
+            id = "info.pzss.zomboid.gradle"
+            displayName = "Project Zomboid Plugin"
+            description = "Use a Project Zomboid installation as a Java dependency"
+            implementationClass = "info.pzss.zomboid.gradle.ProjectZomboidPlugin"
+        }
+    }
 }
 
 repositories {
