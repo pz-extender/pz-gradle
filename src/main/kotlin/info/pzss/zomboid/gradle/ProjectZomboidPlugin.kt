@@ -4,9 +4,10 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.jvm.tasks.Jar
-import org.gradle.kotlin.dsl.*
+import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.IdeaPlugin
-import org.gradle.plugins.ide.idea.model.IdeaModel
 import org.gradle.plugins.ide.idea.model.IdeaProject
 import org.jetbrains.gradle.ext.ProjectSettings
 import org.jetbrains.gradle.ext.TaskTriggersConfig
@@ -46,9 +47,11 @@ open class ProjectZomboidPlugin : Plugin<Project> {
             }
         }
 
-        project.afterEvaluate {
-            val launchTasks = tasks.withType(ProjectZomboidLaunchTask::class)
-            launchTasks.forEach { it.configureAfterEvaluate(config) }
+        project.allprojects {
+            afterEvaluate {
+                val launchTasks = tasks.withType(ProjectZomboidLaunchTask::class)
+                launchTasks.forEach { it.configureAfterEvaluate(config) }
+            }
         }
     }
 

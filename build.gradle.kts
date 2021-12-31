@@ -26,7 +26,7 @@ pluginBundle {
 gradlePlugin {
     plugins {
         create("zomboidPlugin") {
-            id = "info.pzss.zomboid.gradle"
+            id = "info.pzss.zomboid"
             displayName = "Project Zomboid Plugin"
             description = "Use a Project Zomboid installation as a Java dependency"
             implementationClass = "info.pzss.zomboid.gradle.ProjectZomboidPlugin"

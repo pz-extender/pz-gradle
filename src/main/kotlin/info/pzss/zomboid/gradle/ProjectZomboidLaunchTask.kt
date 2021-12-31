@@ -18,7 +18,7 @@ abstract class ProjectZomboidLaunchTask : JavaExec() {
 
     @InputFile
     fun getLaunchSettingsFile(): File {
-        val gameSettings = project.extensions.getByType<ProjectZomboidExtension>()
+        val gameSettings = project.rootProject.extensions.getByType<ProjectZomboidExtension>()
         val gamePath = gameSettings.gamePath.get()
 
         return File(gamePath, launchSettings.get())
@@ -48,7 +48,7 @@ abstract class ProjectZomboidLaunchTask : JavaExec() {
 
         jvmArgs = launchSettings.vmArgs + additionalJvmArgs.get()
         mainClass.set(launchSettings.mainClass.replace('/', '.'))
-        classpath = project.files(*launchSettings.classpath
+        classpath += project.files(*launchSettings.classpath
             .map { File(gamePath, it) }
             .toTypedArray())
 
