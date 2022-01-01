@@ -19,7 +19,7 @@ abstract class ProjectZomboidDecompileTask : DefaultTask() {
     abstract val inputJar: RegularFileProperty
 
     init {
-        outputDirectory.convention(project.layout.buildDirectory.dir("zomboid-decompiled"))
+        outputDirectory.convention(project.rootProject.layout.buildDirectory.dir("zomboid-decompiled"))
     }
 
     @TaskAction

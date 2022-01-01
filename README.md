@@ -14,7 +14,7 @@ plugins {
 }
 
 projectZomboid {
-    gamePath = "C:/Program Files (x86)/Steam/steamapps/common/ProjectZomboid"
+    gamePath.set("C:/Program Files (x86)/Steam/steamapps/common/ProjectZomboid")
 }
 
 repositories {
@@ -28,12 +28,17 @@ dependencies {
 
 ### Running a Project Zomboid installation as a Gradle task
 
-The plugin also registers a new task type: `info.pzss.zomboid.gradle.ProjectZomboidLaunchTask`.
-This can be used to configure and launch Project Zomboid with custom settings.
+The plugin also registers a new task type: `info.pzss.zomboid.gradle.ProjectZomboidLaunchTask`. This can be used to
+configure and launch Project Zomboid with custom settings.
+
+For every `ProjectZomboidLaunchTask` a corresponding IntelliJ run configuration will be created.
 
 ```kotlin
-tasks.register<ProjectZomboidLaunchTask> {
-   launchType.set(LaunchType.CLIENT)
-   additionalJvmArgs.set(listOf("-javaagent:my-pz-agent.jar"))
+tasks.register<ProjectZomboidLaunchTask>("pzLaunch64") {
+    launchType.set(LaunchType.CLIENT)
+
+    // optional
+    additionalJvmArgs.set(listOf("-javaagent:my-pz-agent.jar"))
+    launchSettings.set("ProjectZomboid64.json")
 }
 ```

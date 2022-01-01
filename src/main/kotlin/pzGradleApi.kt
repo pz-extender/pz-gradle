@@ -1,7 +1,8 @@
+import info.pzss.zomboid.gradle.ProjectZomboidExtension
 import org.gradle.api.Project
-import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.getByName
+import org.gradle.kotlin.dsl.the
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
@@ -14,4 +15,16 @@ fun Project.pzLocalRepository() = pzLocal()
 fun Project.pzLocal() = repositories.flatDir {
     dirs(project.rootProject.tasks.getByName<Jar>("projectZomboidSourcesJar").destinationDirectory)
 }
-fun DependencyHandler.pzGameApi() = mapOf("name" to "project-zomboid", "version" to "latest")
+
+val Project.pzGamePath
+    get() = rootProject.the<ProjectZomboidExtension>().gamePath
+
+fun Project.pzGameApi() = mapOf("name" to "project-zomboid", "version" to "latest")
+fun Project.pzGameLibs() = fileTree(pzGamePath) {
+    include("*.jar")
+}
+
+fun Project.pzGameRuntime() = fileTree(pzGamePath) {
+    include("*.jar")
+    include(".")
+}

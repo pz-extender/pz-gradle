@@ -9,7 +9,6 @@ import org.gradle.api.tasks.JavaExec
 import org.gradle.kotlin.dsl.getByType
 import java.io.File
 
-
 abstract class ProjectZomboidLaunchTask : JavaExec() {
     enum class LaunchType {
         SERVER,
