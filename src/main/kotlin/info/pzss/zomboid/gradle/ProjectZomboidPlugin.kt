@@ -11,10 +11,7 @@ import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.*
 import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.gradle.plugins.ide.idea.model.IdeaProject
-import org.jetbrains.gradle.ext.Application
-import org.jetbrains.gradle.ext.ProjectSettings
-import org.jetbrains.gradle.ext.RunConfiguration
-import org.jetbrains.gradle.ext.TaskTriggersConfig
+import org.jetbrains.gradle.ext.*
 
 open class ProjectZomboidPlugin : Plugin<Project> {
     override fun apply(project: Project) = project.run {
@@ -22,11 +19,14 @@ open class ProjectZomboidPlugin : Plugin<Project> {
             error("info.pzss.zomboid should only be applied to the root project")
         }
 
+        plugins.apply(IdeaPlugin::class)
+        plugins.apply(IdeaExtPlugin::class)
+
         val config = extensions.create("projectZomboid", ProjectZomboidExtension::class)
         val pzLibsDir = layout.buildDirectory.dir("pz-libs")
 
         val pzJar = tasks.register<Jar>("projectZomboidJar") {
-            from(config.gamePath)
+            from(config.zomboidClasspathRoot)
             include("**/*.class")
             archiveFileName.set("project-zomboid-latest.jar")
             destinationDirectory.set(pzLibsDir)
@@ -67,6 +67,7 @@ open class ProjectZomboidPlugin : Plugin<Project> {
         subprojects.forEach { subproject ->
             subproject.afterEvaluate {
                 val tasks = project.tasks.withType<ProjectZomboidLaunchTask>()
+                    .filter { it.mainClass.isPresent }
                 tasks.forEach { it.configureAfterEvaluate(config) }
 
                 runConfigurations {

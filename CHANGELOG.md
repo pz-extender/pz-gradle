@@ -1,6 +1,13 @@
 # Project Zomboid Gradle Plugin
 
 ## [Unreleased]
+### Changed
+- Don't require specifying game and server path separately
+
+### Fixes
+- Apply IDEA and IDEA-ext plugins automatically
+
+## [0.1.2]
 ### Added
 
 - Create IntelliJ IDEA run configurations for each launcher task.

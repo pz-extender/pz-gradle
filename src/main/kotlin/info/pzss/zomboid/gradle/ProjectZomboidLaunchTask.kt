@@ -3,6 +3,7 @@ package info.pzss.zomboid.gradle
 import com.google.gson.Gson
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.JavaExec
@@ -16,15 +17,12 @@ abstract class ProjectZomboidLaunchTask : JavaExec() {
     }
 
     @InputFile
-    fun getLaunchSettingsFile(): File {
-        val gameSettings = project.rootProject.extensions.getByType<ProjectZomboidExtension>()
-        val gamePath = gameSettings.gamePath.get()
-
-        return File(gamePath, launchSettings.get())
+    fun getLaunchSettingsFile(): Provider<File> {
+        return project.rootProject.extensions
+            .getByType<ProjectZomboidExtension>()
+            .zomboidPath
+            .zip(launchSettings) { zomboid, launchSettings -> File(zomboid, launchSettings) }
     }
-
-    @get:Input
-    abstract val launchType: Property<LaunchType>
 
     @get:Input
     abstract val additionalJvmArgs: ListProperty<String>
@@ -37,13 +35,15 @@ abstract class ProjectZomboidLaunchTask : JavaExec() {
     }
 
     fun configureAfterEvaluate(gameSettings: ProjectZomboidExtension) {
-        val gamePath = when(launchType.get()) {
-            LaunchType.CLIENT -> gameSettings.gamePath.get()
-            LaunchType.SERVER -> gameSettings.serverPath.get()
+        val gamePathProp = gameSettings.zomboidPath
+
+        if (!gamePathProp.isPresent) {
+            return
         }
 
-        val launchSettingsFile = File(gamePath, launchSettings.get())
-        val launchSettings = Gson().fromJson(launchSettingsFile.readText(), ProjectZomboidSettings::class.java)
+        val gamePath = gamePathProp.get()
+        val launchSettingsFile = getLaunchSettingsFile()
+        val launchSettings = Gson().fromJson(launchSettingsFile.get().readText(), ProjectZomboidSettings::class.java)
 
         jvmArgs = launchSettings.vmArgs + additionalJvmArgs.get()
         mainClass.set(launchSettings.mainClass.replace('/', '.'))

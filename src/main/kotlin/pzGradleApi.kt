@@ -16,15 +16,15 @@ fun Project.pzLocal() = repositories.flatDir {
     dirs(project.rootProject.tasks.getByName<Jar>("projectZomboidSourcesJar").destinationDirectory)
 }
 
-val Project.pzGamePath
-    get() = rootProject.the<ProjectZomboidExtension>().gamePath
+val Project.pzClasspathRoot
+    get() = rootProject.the<ProjectZomboidExtension>().zomboidClasspathRoot
 
 fun Project.pzGameApi() = mapOf("name" to "project-zomboid", "version" to "latest")
-fun Project.pzGameLibs() = fileTree(pzGamePath) {
+fun Project.pzGameLibs() = fileTree(pzClasspathRoot) {
     include("*.jar")
-}
+}.builtBy(project.rootProject.tasks.named("projectZomboidJar"))
 
-fun Project.pzGameRuntime() = fileTree(pzGamePath) {
+fun Project.pzGameRuntime() = fileTree(pzClasspathRoot) {
     include("*.jar")
     include(".")
 }
