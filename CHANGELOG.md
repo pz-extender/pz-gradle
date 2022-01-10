@@ -1,6 +1,8 @@
 # Project Zomboid Gradle Plugin
 
 ## [Unreleased]
+
+## [0.1.4]
 ### Fixes
 - Use correct classpath root for launch tasks
 
