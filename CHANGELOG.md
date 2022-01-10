@@ -1,6 +1,8 @@
 # Project Zomboid Gradle Plugin
 
 ## [Unreleased]
+### Fixes
+- Specify a group name for project-zomboid artifact
 
 ## [0.1.4]
 ### Fixes

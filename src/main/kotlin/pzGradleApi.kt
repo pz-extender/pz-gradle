@@ -19,7 +19,7 @@ fun Project.pzLocal() = repositories.flatDir {
 val Project.pzClasspathRoot
     get() = rootProject.the<ProjectZomboidExtension>().zomboidClasspathRoot
 
-fun Project.pzGameApi() = mapOf("name" to "project-zomboid", "version" to "latest")
+fun Project.pzGameApi() = mapOf("name" to "project-zomboid", "version" to "latest", "group" to "com.theindiestone.pz")
 fun Project.pzGameLibs() = fileTree(pzClasspathRoot) {
     include("*.jar")
 }.builtBy(project.rootProject.tasks.named("projectZomboidJar"))
