@@ -6,6 +6,7 @@
 
 ### Fixes
 - Apply IDEA and IDEA-ext plugins automatically
+- Use correct classpath root for launch tasks
 
 ## [0.1.2]
 ### Added

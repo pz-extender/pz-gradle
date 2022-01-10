@@ -24,7 +24,4 @@ fun Project.pzGameLibs() = fileTree(pzClasspathRoot) {
     include("*.jar")
 }.builtBy(project.rootProject.tasks.named("projectZomboidJar"))
 
-fun Project.pzGameRuntime() = fileTree(pzClasspathRoot) {
-    include("*.jar")
-    include(".")
-}
+fun Project.pzGameRuntime() = pzGameLibs().asFileTree + files(project.rootProject.the<ProjectZomboidExtension>().zomboidClasspathRoot)
