@@ -1,7 +1,7 @@
 plugins {
     id("java-gradle-plugin")
     id("maven-publish")
-    id("com.gradle.plugin-publish") version "0.19.0"
+    id("com.gradle.plugin-publish") version "1.1.0"
     id("org.jetbrains.changelog") version "2.0.0"
     `kotlin-dsl`
 }
