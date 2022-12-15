@@ -43,12 +43,24 @@ open class ProjectZomboidPlugin : Plugin<Project> {
             destinationDirectory.set(pzLibsDir)
         }
 
+        subprojects {
+            afterEvaluate {
+                tasks.withType<ProjectZomboidLaunchTask> {
+                    configureAfterEvaluate(config)
+                }
+            }
+        }
+
         plugins.withType<IdeaPlugin> {
             with(model) {
                 project {
                     settings {
                         configureSyncTasks(pzSourcesJar)
-                        configureRunConfigurations(subprojects, config)
+                        subprojects {
+                            afterEvaluate {
+                                configureRunConfigurations(this@afterEvaluate)
+                            }
+                        }
                     }
                 }
             }
@@ -63,18 +75,12 @@ open class ProjectZomboidPlugin : Plugin<Project> {
         }
     }
 
-    private fun ProjectSettings.configureRunConfigurations(subprojects: Set<Project>, config: ProjectZomboidExtension) {
-        subprojects.forEach { subproject ->
-            subproject.afterEvaluate {
-                val tasks = project.tasks.withType<ProjectZomboidLaunchTask>()
-                    .filter { it.mainClass.isPresent }
-                tasks.forEach { it.configureAfterEvaluate(config) }
+    private fun ProjectSettings.configureRunConfigurations(project: Project) {
+        val tasks = project.tasks.withType<ProjectZomboidLaunchTask>().filter { it.mainClass.isPresent }
 
-                runConfigurations {
-                    tasks.forEach {
-                        createPzApp(it)
-                    }
-                }
+        runConfigurations {
+            tasks.forEach {
+                createPzApp(it)
             }
         }
     }
