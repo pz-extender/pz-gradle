@@ -34,8 +34,6 @@ For every `ProjectZomboidLaunchTask` a corresponding IntelliJ run configuration 
 
 ```kotlin
 tasks.register<ProjectZomboidLaunchTask>("pzLaunch64") {
-    launchType.set(LaunchType.CLIENT)
-
     // optional
     additionalJvmArgs.set(listOf("-javaagent:my-pz-agent.jar"))
     launchSettings.set("ProjectZomboid64.json")
