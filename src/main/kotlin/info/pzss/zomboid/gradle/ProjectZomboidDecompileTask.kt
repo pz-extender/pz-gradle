@@ -1,6 +1,6 @@
 package info.pzss.zomboid.gradle
 
-import info.pzss.zomboid.gradle.tasks.decompile.DecompilerIo
+import info.pzss.zomboid.gradle.decompile.DecompilerIo
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
