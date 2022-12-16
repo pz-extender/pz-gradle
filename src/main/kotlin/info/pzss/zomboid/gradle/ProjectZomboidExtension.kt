@@ -15,15 +15,21 @@ abstract class ProjectZomboidExtension {
     }
 
     private val distributonType: Provider<DistributionType> = zomboidPath.map {
-        when (Files.exists(Paths.get(it, "java"))) {
-            true -> DistributionType.SERVER
-            false -> DistributionType.CLIENT
+        if (Files.exists(Paths.get(it, "java"))) {
+            DistributionType.SERVER
+        } else {
+            DistributionType.CLIENT
         }
     }
 
     val zomboidClasspathRoot: Provider<String> = zomboidPath.zip(distributonType) { path, type ->
         when (type) {
-            DistributionType.CLIENT -> path
+            DistributionType.CLIENT -> if (Files.exists(Paths.get(path, "projectzomboid.sh"))) {
+                "$path/projectzomboid" // Linux client
+            } else {
+                path
+            }
+
             DistributionType.SERVER -> "$path/java"
         }
     }
