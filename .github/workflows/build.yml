@@ -47,8 +47,6 @@ jobs:
       fail-fast: false
       matrix:
         gradleVersion:
-          - 6.6.1
-          - 6.9.1
           - 7.3
         os:
           - windows-latest
