@@ -119,7 +119,7 @@ open class ProjectZomboidPlugin : Plugin<Project> {
     ) = (this as ExtensionAware).extensions.configure("taskTriggers", action)
 
     private fun ProjectSettings.runConfigurations(configuration: PolymorphicDomainObjectContainer<RunConfiguration>.() -> Unit) =
-        (this as ExtensionAware).configure<NamedDomainObjectContainer<RunConfiguration>> {
-            (this as PolymorphicDomainObjectContainer<RunConfiguration>).apply(configuration)
+        (this as ExtensionAware).configure<RunConfigurationContainer> {
+            apply(configuration)
         }
 }
