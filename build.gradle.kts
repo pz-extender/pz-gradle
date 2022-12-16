@@ -37,7 +37,7 @@ gradlePlugin {
 repositories {
     mavenCentral()
     google()
-    maven("https://repo.openrs2.org/repository/openrs2/")
+    maven("https://www.jetbrains.com/intellij-repository/releases/")
     maven("https://plugins.gradle.org/m2")
 }
 
@@ -46,5 +46,5 @@ dependencies {
     implementation(localGroovy())
     implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.7")
     implementation("com.google.code.gson:gson:2.10")
-    implementation("org.openrs2:fernflower:1.1.1")
+    implementation("com.jetbrains.intellij.java:java-decompiler-engine:223.7571.182")
 }
