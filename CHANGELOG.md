@@ -1,6 +1,13 @@
 # Project Zomboid Gradle Plugin
 
 ## [Unreleased]
+### Fixes
+- Use new API to create IDEA run configurations.
+
+## [0.1.6]
+### Breaking Changes
+- Minimum Java version is now 17
+- Minimum Gradle version is now 7.3
 
 ## [0.1.5]
 ### Fixes
