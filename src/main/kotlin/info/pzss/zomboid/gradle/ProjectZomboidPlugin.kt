@@ -87,7 +87,7 @@ open class ProjectZomboidPlugin : Plugin<Project> {
 
     private fun PolymorphicDomainObjectContainer<RunConfiguration>.createPzApp(task: ProjectZomboidLaunchTask) {
         create<Application>(task.name) {
-            includeProvidedDependencies = false
+            includeProvidedDependencies = true
             workingDirectory = task.workingDir.toString()
             programParameters = "-debug"
             mainClass = task.mainClass.get()
