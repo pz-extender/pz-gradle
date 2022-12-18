@@ -1,6 +1,9 @@
 # Project Zomboid Gradle Plugin
 
 ## Unreleased
+
+## 0.1.8 - 2022-12-18
+
 ### Fixes
 - Add provided dependencies to classpath when creating IDEA run configurations.
 - Provide zomboid dependency jars to Fernflower during decompilation step.
