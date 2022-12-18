@@ -1,17 +1,12 @@
 package info.pzss.zomboid.gradle
 
 import com.google.gson.Gson
-import groovy.lang.Closure
-import org.gradle.api.Task
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.JavaExec
-import org.gradle.api.tasks.TaskAction
-import org.gradle.kotlin.dsl.closureOf
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
 import java.io.File
 
