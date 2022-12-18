@@ -1,6 +1,5 @@
 package info.pzss.zomboid.gradle
 
-import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Plugin
 import org.gradle.api.PolymorphicDomainObjectContainer
 import org.gradle.api.Project
@@ -34,6 +33,7 @@ open class ProjectZomboidPlugin : Plugin<Project> {
 
         val pzSources = tasks.register<ProjectZomboidDecompileTask>("projectZomboidSources") {
             inputJar.set(pzJar.flatMap { it.archiveFile })
+            dependencyDir.set(config.zomboidClasspathRoot)
         }
 
         val pzSourcesJar = tasks.register<Jar>("projectZomboidSourcesJar") {
