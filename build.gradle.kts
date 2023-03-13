@@ -46,5 +46,5 @@ dependencies {
     implementation(localGroovy())
     implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.7")
     implementation("com.google.code.gson:gson:2.10")
-    implementation("com.jetbrains.intellij.java:java-decompiler-engine:223.7571.182")
+    implementation("com.jetbrains.intellij.java:java-decompiler-engine:223.8836.41")
 }
