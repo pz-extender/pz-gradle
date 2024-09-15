@@ -6,7 +6,7 @@ import org.gradle.kotlin.dsl.the
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
-@Suppress("unused")
+@Suppress("unused", "ObjectPropertyName")
 inline val PluginDependenciesSpec.`project-zomboid`: PluginDependencySpec
     get() = id("info.pzss.zomboid.gradle")
 
