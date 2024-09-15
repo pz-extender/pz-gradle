@@ -28,7 +28,7 @@ jobs:
         uses: CyberAndrii/setup-steamcmd@v1
 
       - name: Setup Project Zomboid cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ runner.workspace }}/zomboid
           key: pz-${{ matrix.os }}-${{ hashFiles('.github/current.pzversion') }}
@@ -59,7 +59,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v3
 
   codeInspection:
     name: Code Inspection
@@ -71,7 +71,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Qodana - Code Inspection
-        uses: JetBrains/qodana-action@v2022.3.0
+        uses: JetBrains/qodana-action@v2024.1
 
       - name: Qodana - Upload Report
         uses: github/codeql-action/upload-sarif@v2
@@ -109,12 +109,14 @@ jobs:
         uses: CyberAndrii/setup-steamcmd@v1
 
       - name: Setup Project Zomboid cache
-        uses: actions/cache@v2
+        id: zomboid-install
+        uses: actions/cache@v4
         with:
           path: ${{ runner.workspace }}/zomboid
           key: pz-${{ matrix.os }}-${{ hashFiles('.github/current.pzversion') }}
 
       - name: Install Project Zomboid
+        if: steps.zomboid-install.outputs.cache-hit != 'true'
         run: |
           steamcmd +force_install_dir "$ZOMBOID_PATH" \
              +login anonymous \
