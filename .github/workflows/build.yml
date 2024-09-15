@@ -87,7 +87,7 @@ jobs:
       fail-fast: false
       matrix:
         gradleVersion:
-          - 8.10
+          - "8.10"
         os:
           - windows-latest
           - ubuntu-latest
