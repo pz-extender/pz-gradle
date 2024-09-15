@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledIf
+import org.junit.jupiter.api.io.CleanupMode
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import kotlin.io.path.Path
@@ -22,7 +23,7 @@ class ProjectZomboidPluginTest {
         }
     }
 
-    @TempDir
+    @TempDir(cleanup = CleanupMode.NEVER)
     lateinit var testProjectDir: File
     private lateinit var settingsFile: File
     private lateinit var buildFile: File
