@@ -128,6 +128,7 @@ jobs:
         run: ./gradlew check -PtestGradleVersion="${{ matrix.gradleVersion }}"
         env:
           CI: "true"
+          ZOMBOID_PATH: ${{ runner.workspace }}/zomboid
 
       - name: Collect Test Results
         if: ${{ failure() }}
