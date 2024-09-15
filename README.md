@@ -8,7 +8,7 @@ The plugin must be registered in the root project (i.e. top-level `build.gradle.
 
 ```kotlin
 plugins {
-    id("info.pzss.zomboid") version ("0.1.2")
+    id("info.pzss.zomboid") version ("0.2.0")
 }
 
 projectZomboid {

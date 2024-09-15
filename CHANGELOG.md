@@ -1,13 +1,15 @@
 # Project Zomboid Gradle Plugin
 
 ## Unreleased
-### Fixes
-- Add provided dependencies to classpath when creating IDEA run configurations.
-- Provide zomboid dependency jars to Fernflower during decompilation step.
 
 ### Breaking Changes
 - Remove `pzLocal()` repository
 - Game artifacts are now provided via outgoing configurations instead of a `flatRepository`
+
+## 0.1.8 - 2022-12-18
+### Fixes
+- Add provided dependencies to classpath when creating IDEA run configurations.
+- Provide zomboid dependency jars to Fernflower during decompilation step.
 
 ## 0.1.7 - 2022-12-16
 
