@@ -28,6 +28,7 @@ jobs:
         uses: CyberAndrii/setup-steamcmd@v1
 
       - name: Setup Project Zomboid cache
+        id: zomboid-install
         uses: actions/cache@v4
         with:
           path: ${{ runner.workspace }}/zomboid
@@ -42,6 +43,7 @@ jobs:
         shell: bash
         env:
           ZOMBOID_PATH: ${{ runner.workspace }}/zomboid
+        if: steps.zomboid-install.outputs.cache-hit != 'true'
 
       - name: Show contents of Zomboid install
         run: |
