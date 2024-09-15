@@ -50,7 +50,7 @@ class ProjectZomboidPluginTest {
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withPluginClasspath()
-            .withArguments(":projectZomboidSourcesJar")
+            .withArguments(":projectZomboidSourcesJar", "--stacktrace")
             .withDebug(true)
             .run()
 
