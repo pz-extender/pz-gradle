@@ -16,8 +16,8 @@ class ProjectZomboidPluginTest {
     companion object {
         @JvmStatic
         fun zomboidInstallationExists(): Boolean {
-            val path = System.getenv("ZOMBOID_PATH").let { Path(it) }
-            return path.exists()
+            val path = System.getenv("ZOMBOID_PATH")?.let { Path(it) }
+            return path?.exists() ?: false
         }
     }
 
