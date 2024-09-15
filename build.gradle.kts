@@ -1,8 +1,8 @@
 plugins {
     id("java-gradle-plugin")
     id("maven-publish")
-    id("com.gradle.plugin-publish") version "0.19.0"
-    id("org.jetbrains.changelog") version "2.0.0"
+    id("com.gradle.plugin-publish") version "1.3.0"
+    id("org.jetbrains.changelog") version "2.2.1"
     `kotlin-dsl`
 }
 
@@ -15,12 +15,6 @@ version = properties("version")!!
 changelog {
     version.set(project.version as? String)
     groups.set(emptyList())
-}
-
-pluginBundle {
-    website = "https://github.com/pz-extender/pz-gradle"
-    vcsUrl = "https://github.com/pz-extender/pz-gradle"
-    tags = listOf("project-zomboid", "zomboid", "modding", "mod")
 }
 
 gradlePlugin {
@@ -44,7 +38,15 @@ repositories {
 dependencies {
     implementation(gradleApi())
     implementation(localGroovy())
-    implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.7")
+    implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.8")
     implementation("com.google.code.gson:gson:2.10")
     implementation("com.jetbrains.intellij.java:java-decompiler-engine:223.7571.182")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.3")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(gradleTestKit())
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
 }

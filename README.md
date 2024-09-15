@@ -12,11 +12,7 @@ plugins {
 }
 
 projectZomboid {
-    gamePath.set("C:/Program Files (x86)/Steam/steamapps/common/ProjectZomboid")
-}
-
-repositories {
-    pzLocal()
+    zomboidPath.set("C:/Program Files (x86)/Steam/steamapps/common/ProjectZomboid")
 }
 
 dependencies {
