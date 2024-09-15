@@ -2,6 +2,7 @@ package info.pzss.zomboid.gradle
 
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -30,6 +31,12 @@ class ProjectZomboidPluginTest {
     fun setup() {
         settingsFile = File(testProjectDir, "settings.gradle.kts")
         buildFile = File(testProjectDir, "build.gradle.kts")
+    }
+
+    @AfterEach
+    fun cleanup() {
+        settingsFile.delete()
+        buildFile.delete()
     }
 
     @Test
