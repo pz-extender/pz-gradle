@@ -1,34 +1,38 @@
 package info.pzss.zomboid.gradle
 
 import org.gradle.testkit.runner.GradleRunner
-import org.gradle.testkit.runner.TaskOutcome.FAILED
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.condition.DisabledIf
-import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable
+import org.junit.jupiter.api.condition.EnabledIf
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import kotlin.io.path.Path
+import kotlin.io.path.exists
 
+@EnabledIf("zomboidInstallationExists")
 class ProjectZomboidPluginTest {
+    companion object {
+        @JvmStatic
+        fun zomboidInstallationExists(): Boolean {
+            val path = System.getenv("ZOMBOID_PATH").let { Path(it) }
+            return path.exists()
+        }
+    }
 
     @TempDir
     lateinit var testProjectDir: File
     private lateinit var settingsFile: File
     private lateinit var buildFile: File
-    private lateinit var propertiesFile: File
 
     @BeforeEach
     fun setup() {
         settingsFile = File(testProjectDir, "settings.gradle.kts")
-        propertiesFile = File(testProjectDir, "gradle.properties")
         buildFile = File(testProjectDir, "build.gradle.kts")
     }
 
     @Test
-    @DisabledIfEnvironmentVariable(named = "CI", matches = "true")
     fun `decompiles sources`() {
         val buildFileContent = """
          plugins {
@@ -36,7 +40,7 @@ class ProjectZomboidPluginTest {
          }
          
          projectZomboid {
-             zomboidPath.set("/home/gtierney/.steam/steam/steamapps/common/ProjectZomboid/projectzomboid")
+             zomboidPath.set(System.getenv("ZOMBOID_PATH"))
          }
       """.trimIndent()
 

@@ -11,6 +11,44 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  zomboidInstallation:
+    name: Download Project Zomboid Server
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Setup steamcmd
+        uses: CyberAndrii/setup-steamcmd@v1
+
+      - name: Setup Project Zomboid cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ runner.workspace }}/zomboid
+          key: pz-${{ matrix.os }}-${{ hashFiles('.github/current.pzversion') }}
+
+      - name: Install Project Zomboid
+        run: |
+          steamcmd +force_install_dir "$ZOMBOID_PATH" \
+             +login anonymous \
+             +app_update 380870 \
+             +quit
+        shell: bash
+        env:
+          ZOMBOID_PATH: ${{ runner.workspace }}/zomboid
+
+      - name: Show contents of Zomboid install
+        run: |
+          find "$ZOMBOID_PATH" -maxdepth 2 -ls
+        shell: bash
+        env:
+          ZOMBOID_PATH: ${{ runner.workspace }}/zomboid
 
   gradleValidation:
     name: Gradle Wrapper
@@ -41,7 +79,9 @@ jobs:
           sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
   test:
     name: Test
-    needs: gradleValidation
+    needs:
+      - gradleValidation
+      - zomboidInstallation
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -64,6 +104,25 @@ jobs:
           distribution: zulu
           java-version: 21
           cache: gradle
+
+      - name: Setup steamcmd
+        uses: CyberAndrii/setup-steamcmd@v1
+
+      - name: Setup Project Zomboid cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ runner.workspace }}/zomboid
+          key: pz-${{ matrix.os }}-${{ hashFiles('.github/current.pzversion') }}
+
+      - name: Install Project Zomboid
+        run: |
+          steamcmd +force_install_dir "$ZOMBOID_PATH" \
+             +login anonymous \
+             +app_update 380870 \
+             +quit
+        shell: bash
+        env:
+          ZOMBOID_PATH: ${{ runner.workspace }}/zomboid
 
       - name: Run Linters and Test
         run: ./gradlew check -PtestGradleVersion="${{ matrix.gradleVersion }}"
