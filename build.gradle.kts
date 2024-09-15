@@ -29,6 +29,10 @@ gradlePlugin {
             displayName = "Project Zomboid Plugin"
             description = "Use a Project Zomboid installation as a Java dependency"
             implementationClass = "info.pzss.zomboid.gradle.ProjectZomboidPlugin"
+            website = "https://github.com/pz-extender/pz-gradle"
+            vcsUrl = "https://github.com/pz-extender/pz-gradle"
+            @Suppress("UnstableApiUsage")
+            tags = listOf("project-zomboid", "zomboid", "modding", "mod")
         }
     }
 }
