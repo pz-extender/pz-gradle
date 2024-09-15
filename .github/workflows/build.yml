@@ -81,7 +81,7 @@ jobs:
           QODANA_ENDPOINT: 'https://qodana.cloud'
 
       - name: Qodana - Upload Report
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
   test:
