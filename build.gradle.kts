@@ -45,7 +45,7 @@ dependencies {
     implementation(localGroovy())
     implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.8")
     implementation("com.google.code.gson:gson:2.10")
-    implementation("com.jetbrains.intellij.java:java-decompiler-engine:223.8836.41")
+    implementation("com.jetbrains.intellij.java:java-decompiler-engine:242.21829.142")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
