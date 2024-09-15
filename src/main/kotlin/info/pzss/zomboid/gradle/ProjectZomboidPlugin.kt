@@ -13,6 +13,7 @@ import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.gradle.plugins.ide.idea.model.IdeaProject
 import org.jetbrains.gradle.ext.*
 
+@Suppress("unused")
 open class ProjectZomboidPlugin : Plugin<Project> {
     override fun apply(project: Project) = project.run {
         if (this != rootProject) {
@@ -56,7 +57,13 @@ open class ProjectZomboidPlugin : Plugin<Project> {
             add("projectZomboid", projectZomboidSourcesJar)
         }
 
-        Unit
+        subprojects {
+            afterEvaluate {
+                tasks.withType<ProjectZomboidLaunchTask> {
+                    configureAfterEvaluate(config)
+                }
+            }
+        }
     }
 
     private fun ProjectSettings.configureSyncTasks(vararg tasks: TaskProvider<*>) {
