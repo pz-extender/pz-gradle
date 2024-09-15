@@ -5,7 +5,6 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.*
-import org.gradle.plugins.ide.idea.IdeaPlugin
 
 @Suppress("unused")
 open class ProjectZomboidPlugin : Plugin<Project> {
