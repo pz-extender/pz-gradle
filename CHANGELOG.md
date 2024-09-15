@@ -5,6 +5,7 @@
 ### Breaking Changes
 - Remove `pzLocal()` repository
 - Game artifacts are now provided via outgoing configurations instead of a `flatRepository`
+- Remove IntelliJ Run Configuration support. Note: these can still be created manually via Gradle tasks.
 
 ## 0.1.8 - 2022-12-18
 ### Fixes

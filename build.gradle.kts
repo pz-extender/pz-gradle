@@ -43,7 +43,6 @@ repositories {
 dependencies {
     implementation(gradleApi())
     implementation(localGroovy())
-    implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.8")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.jetbrains.intellij.java:java-decompiler-engine:242.21829.142")
 
