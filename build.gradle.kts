@@ -17,6 +17,11 @@ changelog {
     groups.set(emptyList())
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
 gradlePlugin {
     plugins {
         create("zomboidPlugin") {
