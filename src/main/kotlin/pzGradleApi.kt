@@ -15,6 +15,7 @@ val Project.pzClasspathRoot
 
 @Suppress("unused")
 fun DependencyHandlerScope.pzGameApi() = project(":", configuration = "projectZomboid")
+
 fun Project.pzGameLibs() = fileTree(pzClasspathRoot) {
     include("*.jar")
 }.builtBy(project.rootProject.tasks.named("projectZomboidJar"))
