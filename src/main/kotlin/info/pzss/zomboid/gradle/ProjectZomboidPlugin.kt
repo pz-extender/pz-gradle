@@ -4,6 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.PolymorphicDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.jvm.tasks.Jar
@@ -18,13 +19,14 @@ open class ProjectZomboidPlugin : Plugin<Project> {
             error("info.pzss.zomboid should only be applied to the root project")
         }
 
+        plugins.apply(JavaPlugin::class)
         plugins.apply(IdeaPlugin::class)
         plugins.apply(IdeaExtPlugin::class)
 
         val config = extensions.create("projectZomboid", ProjectZomboidExtension::class)
         val pzLibsDir = layout.buildDirectory.dir("pz-libs")
 
-        val pzJar = tasks.register<Jar>("projectZomboidJar") {
+        val projectZomboidJar by tasks.registering(Jar::class) {
             from(config.zomboidClasspathRoot)
             include("**/*.class")
             archiveFileName.set("project-zomboid-latest.jar")
@@ -32,38 +34,26 @@ open class ProjectZomboidPlugin : Plugin<Project> {
         }
 
         val pzSources = tasks.register<ProjectZomboidDecompileTask>("projectZomboidSources") {
-            inputJar.set(pzJar.flatMap { it.archiveFile })
+            inputJar.set(projectZomboidJar.flatMap { it.archiveFile })
             dependencyDir.set(config.zomboidClasspathRoot)
         }
 
-        val pzSourcesJar = tasks.register<Jar>("projectZomboidSourcesJar") {
+        val projectZomboidSourcesJar by tasks.registering(Jar::class) {
             from(pzSources.flatMap { it.outputDirectory })
             include("**/*.java")
             archiveFileName.set("project-zomboid-latest-sources.jar")
+            archiveClassifier.set("sources")
             destinationDirectory.set(pzLibsDir)
         }
 
-        subprojects {
-            afterEvaluate {
-                tasks.withType<ProjectZomboidLaunchTask> {
-                    configureAfterEvaluate(config)
-                }
-            }
+        val projectZomboid by project.configurations.creating {
+            isCanBeConsumed = true
+            isCanBeResolved = true
         }
 
-        plugins.withType<IdeaPlugin> {
-            with(model) {
-                project {
-                    settings {
-                        configureSyncTasks(pzSourcesJar)
-                        subprojects {
-                            afterEvaluate {
-                                configureRunConfigurations(this@afterEvaluate)
-                            }
-                        }
-                    }
-                }
-            }
+        artifacts {
+            add("projectZomboid", projectZomboidJar)
+            add("projectZomboid", projectZomboidSourcesJar)
         }
 
         Unit

@@ -1,25 +1,23 @@
 import info.pzss.zomboid.gradle.ProjectZomboidExtension
 import org.gradle.api.Project
+import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.jvm.tasks.Jar
+import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.gradle.kotlin.dsl.getByName
+import org.gradle.kotlin.dsl.project
 import org.gradle.kotlin.dsl.the
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
+@Suppress("unused")
 inline val PluginDependenciesSpec.`project-zomboid`: PluginDependencySpec
     get() = id("info.pzss.zomboid.gradle")
-
-@Deprecated("Deprecated since 0.1.1", replaceWith = ReplaceWith("pzLocal()"))
-fun Project.pzLocalRepository() = pzLocal()
-
-fun Project.pzLocal() = repositories.flatDir {
-    dirs(project.rootProject.tasks.getByName<Jar>("projectZomboidSourcesJar").destinationDirectory)
-}
 
 val Project.pzClasspathRoot
     get() = rootProject.the<ProjectZomboidExtension>().zomboidClasspathRoot
 
-fun Project.pzGameApi() = mapOf("name" to "project-zomboid", "version" to "latest", "group" to "com.theindiestone.pz")
+@Suppress("unused")
+fun DependencyHandlerScope.pzGameApi() = project(":", configuration = "projectZomboid")
 fun Project.pzGameLibs() = fileTree(pzClasspathRoot) {
     include("*.jar")
 }.builtBy(project.rootProject.tasks.named("projectZomboidJar"))
