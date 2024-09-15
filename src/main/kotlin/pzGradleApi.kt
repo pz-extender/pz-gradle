@@ -1,9 +1,6 @@
 import info.pzss.zomboid.gradle.ProjectZomboidExtension
 import org.gradle.api.Project
-import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.getByName
 import org.gradle.kotlin.dsl.project
 import org.gradle.kotlin.dsl.the
 import org.gradle.plugin.use.PluginDependenciesSpec
@@ -22,4 +19,6 @@ fun Project.pzGameLibs() = fileTree(pzClasspathRoot) {
     include("*.jar")
 }.builtBy(project.rootProject.tasks.named("projectZomboidJar"))
 
-fun Project.pzGameRuntime() = pzGameLibs().asFileTree + files(project.rootProject.the<ProjectZomboidExtension>().zomboidClasspathRoot)
+@Suppress("unused")
+fun Project.pzGameRuntime() =
+    pzGameLibs().asFileTree + files(project.rootProject.the<ProjectZomboidExtension>().zomboidClasspathRoot)
