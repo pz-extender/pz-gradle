@@ -50,7 +50,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.jetbrains.intellij.java:java-decompiler-engine:242.21829.142")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.3")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation(gradleTestKit())
 }
